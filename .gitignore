@@ -1,0 +1,17 @@
+# Salesforce cache / build
+.sfdx/
+.sf/
+.localdevserver/
+deploy-options.json
+*.log
+
+# Metadata API output
+mdapi-out/
+
+# Node
+node_modules/
+
+# OS / editor
+.DS_Store
+.idea/
+*.swp

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants access to the Citizens Bank voice-agent appointment scheduling Apex classes.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Citizens Voice Scheduler User</label>
+    <classAccesses>
+        <apexClass>CitizensSchedulerService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CitizensAgentScheduleAppointment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>
