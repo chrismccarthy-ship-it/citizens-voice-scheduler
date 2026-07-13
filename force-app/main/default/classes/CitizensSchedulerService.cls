@@ -174,13 +174,16 @@ public with sharing class CitizensSchedulerService {
     private static ServiceResource pickResource(
         Id territoryId, String skillName, String bankerName, Datetime start, Datetime finish
     ) {
-        // Candidates = active members of the territory.
+        // Candidates = active technicians who are members of the territory.
+        // Only active ResourceType 'T' resources can be assigned to a
+        // ServiceAppointment; anything else fails the AssignedResource insert.
         Set<Id> candidateIds = new Set<Id>();
         for (ServiceTerritoryMember m : [
             SELECT ServiceResourceId
             FROM ServiceTerritoryMember
             WHERE ServiceTerritoryId = :territoryId
               AND ServiceResource.IsActive = true
+              AND ServiceResource.ResourceType = 'T'
               AND (EffectiveEndDate = null OR EffectiveEndDate >= :start)
         ]) {
             candidateIds.add(m.ServiceResourceId);
@@ -189,7 +192,7 @@ public with sharing class CitizensSchedulerService {
         if (candidateIds.isEmpty()) {
             for (ServiceResource r : [
                 SELECT Id FROM ServiceResource
-                WHERE IsActive = true AND RelatedRecordId != null
+                WHERE IsActive = true AND ResourceType = 'T' AND RelatedRecordId != null
                 ORDER BY Name LIMIT 200
             ]) {
                 candidateIds.add(r.Id);
